@@ -1,10 +1,18 @@
-import django.shortcuts
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseNotFound, Http404
+
+from .models import *
+
+menu = ['About', 'Add article', 'Feedback', 'Login']
 
 
 def index(request):  # http://127.0.0.1:8000/women/
-    return HttpResponse("Women's app page.")
+    posts = Women.objects.all()
+    return render(request, 'women/index.html', {'posts': posts, 'menu': menu, 'title': 'Main page'})
+
+
+def about(request):  # http://127.0.0.1:8000/women/about/
+    return render(request, 'women/about.html', {'menu': menu, 'title': 'About'})
 
 
 def categories(request, catid):  # http://127.0.0.1:8000/women/cats/
